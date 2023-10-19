@@ -408,7 +408,7 @@ class LB130(object):
         
         try:
             sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-            sock.settimeout(15)
+            sock.settimeout(10)
             sock.sendto(enc_message, (self.__udp_ip, self.__udp_port))
             data_received = False
             dec_data = ""
@@ -437,12 +437,12 @@ class LB130(object):
 
         try:
             sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-            sock.settimeout(5)
+            sock.settimeout(10)
             sock.sendto(enc_message, (self.__udp_ip, self.__udp_port))
             data_received = False
             dec_data = ""
             while True:
-                data, addr = sock.recvfrom(1024)  # buffer size is 1024 bytes
+                data, addr = sock.recvfrom(4096)  # buffer size is 1024 bytes
                 dec_data = self.__decrypt(data, self.encryption_key)
                 if "}}}" in dec_data:  # end of sysinfo message
                     data_received = True
