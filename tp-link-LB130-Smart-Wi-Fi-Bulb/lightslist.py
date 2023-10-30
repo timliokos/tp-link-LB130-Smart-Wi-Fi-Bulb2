@@ -3,6 +3,7 @@ import tkinter.messagebox
 import customtkinter
 import subprocess
 from CTkTable import *
+from databaseinfo import *
 
 # Appearance Settings
 customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
@@ -32,9 +33,13 @@ class App(customtkinter.CTk):
         self.sidebar_frame.grid_rowconfigure(5, weight=1)
 
         # Logo Label
-        self.logo_label = customtkinter.CTkLabel(self.sidebar_frame, text="D633 LMMS",
-                                                 font=customtkinter.CTkFont(size=20, weight="bold"))
-        self.logo_label.grid(row=0, column=0, padx=20, pady=(20, 10))
+        imagesb = tkinter.PhotoImage(file="images/d633logosm2.png")
+        new_width = 10
+        new_height = 10
+        resized_imagesb = imagesb.subsample(new_width, new_height)
+        self.sidebar_button_sb = customtkinter.CTkButton(self.sidebar_frame, image=resized_imagesb, text="", fg_color="#212121", hover_color="#212121", width=50, height=40)
+        self.sidebar_button_sb.grid(row=0, column=0, padx=0, pady=(20,20))
+        self.sidebar_button_sb.icon = resized_imagesb
 
         # Home Button
         self.sidebar_button_1 = customtkinter.CTkButton(self.sidebar_frame, text="Home",
@@ -106,25 +111,11 @@ class App(customtkinter.CTk):
         self.labeld.grid(row=1, column=0, padx=20, pady=(10, 10), sticky="nw")
 
         # Light Name
-        value = [["Light Name","Light IP Address"],
-         ["Light A1","192.168.1.100"],
-         ["Light A2","192.168.1.101"],
-         ["Light B1","192.168.1.102"],
-         ["Light B2","192.168.1.103"],
-         ["Light B3","192.168.1.104"],
-         ["Light B4","192.168.1.105"],
-         ["Light B5","192.168.1.106"],
-         ["Light C1","192.168.1.107"],
-         ["Light C2","192.168.1.108"],
-         ["Light C3","192.168.1.109"],
-         ["Light D1","192.168.1.110"],
-         ["Light D2","192.168.1.111"],
-         ["Light D3","192.168.1.112"],
-         ["Light D4","192.168.1.113"],
-         ["Light D5","192.168.1.114"]]
+        light_names, ip_addresses = get_light_information()
 
-        table = CTkTable(self, row=16, column=2, values=value)
-        table.grid(row=1, column=1, padx=(230,20), pady=(10, 10), sticky="nw")
+        # Create a table to display light information
+        self.table = CTkTable(self, row=len(light_names)+1, column=2, values=[["Light Name", "Light IP Address"]] + [[light_names[i], ip_addresses[i]] for i in range(len(light_names))])
+        self.table.grid(row=1, column=1, padx=(230, 20), pady=(10, 10), sticky="nw")
         
         # Add Light Button
         button = customtkinter.CTkButton(self.frame, text="Add Light", command=self.open_addmorelights, fg_color="#44dd45", hover_color="#02c910", text_color="black", font=customtkinter.CTkFont(size=18), width=150, height=40, border_width=3, border_color="white")

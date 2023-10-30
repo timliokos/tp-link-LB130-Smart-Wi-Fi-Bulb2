@@ -32,7 +32,7 @@ def controlBulbs(bulb_ips):
             light.saturation = 90
             time.sleep(0)
 
-            for hue in range(0, 360, 10, ):  # Cycle through hues in increments of 10
+            for hue in range(0, 360, 60, ):  # Cycle through hues in increments of 10
                 light.hue = hue
                 time.sleep(0)
             

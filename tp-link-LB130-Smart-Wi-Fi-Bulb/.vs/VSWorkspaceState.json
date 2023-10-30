@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\images",
+    "\\music"
   ],
-  "SelectedNode": "\\main.py",
+  "SelectedNode": "\\lecteur.py",
   "PreviewInSolutionExplorer": false
 }

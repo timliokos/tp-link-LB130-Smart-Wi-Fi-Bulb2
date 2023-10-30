@@ -2,6 +2,7 @@ import tkinter
 import tkinter.messagebox
 import customtkinter
 import subprocess
+from databaseinfo import *
 
 # Appearance Settings
 customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
@@ -31,9 +32,13 @@ class App(customtkinter.CTk):
         self.sidebar_frame.grid_rowconfigure(5, weight=1)
 
         # Logo Label
-        self.logo_label = customtkinter.CTkLabel(self.sidebar_frame, text="D633 LMMS",
-                                                 font=customtkinter.CTkFont(size=20, weight="bold"))
-        self.logo_label.grid(row=0, column=0, padx=20, pady=(20, 10))
+        imagesb = tkinter.PhotoImage(file="images/d633logosm2.png")
+        new_width = 10
+        new_height = 10
+        resized_imagesb = imagesb.subsample(new_width, new_height)
+        self.sidebar_button_sb = customtkinter.CTkButton(self.sidebar_frame, image=resized_imagesb, text="", fg_color="#212121", hover_color="#212121", width=50, height=40)
+        self.sidebar_button_sb.grid(row=0, column=0, padx=0, pady=(20,20))
+        self.sidebar_button_sb.icon = resized_imagesb
 
         # Home Button
         self.sidebar_button_1 = customtkinter.CTkButton(self.sidebar_frame, text="Home",
@@ -95,30 +100,32 @@ class App(customtkinter.CTk):
 
         self.frame.grid(row=1, column=1, padx=20, pady=(10,10))
 
-        # Page Heading
-        self.label = customtkinter.CTkLabel(self.frame, text="Add More Lights",
-                                                 font=customtkinter.CTkFont(size=30, weight="bold"))
-        self.label.grid(row=0, column=1, padx=(40,20), pady=(60, 30))
+        # Page Header
+        image1 = tkinter.PhotoImage(file="images/lighticonwhite.png")
+        new_width = 17
+        new_height = 17
+        resized_image1 = image1.subsample(new_width, new_height)
+        self.button_3 = customtkinter.CTkButton(self.frame, image=resized_image1, text="Add More Lights", fg_color="#1a1a1a", hover_color="#1a1a1a", font=customtkinter.CTkFont(size=30, weight="bold"), width=650, height=50)
+        self.button_3.grid(row=1, column=1, columnspan=3, padx=(25,0), pady=(10, 10), sticky='nw')
+        self.button_3.icon = resized_image1
 
-        # Dummy Label for col 0
-        self.labeld = customtkinter.CTkLabel(self.frame, text="                           ", font=customtkinter.CTkFont(size=15))
-        self.labeld.grid(row=1, column=0, padx=20, pady=(10, 10), sticky="nw")
+
 
         # Light Name
-        entry1 = customtkinter.CTkEntry(self.frame, placeholder_text="Enter Light Name", width=250, height=40)
-        entry1.grid(row=1, column=1, pady=12, padx=(30,10))
+        self.entry1 = customtkinter.CTkEntry(self.frame, placeholder_text="Enter Light Name", width=250, height=40)
+        self.entry1.grid(row=1, column=1, pady=(140,10), padx=(230,10), sticky='nw')
 
         # IP Address
-        entry2 = customtkinter.CTkEntry(self.frame, placeholder_text="Enter Light IP Address", width=250, height=40)
-        entry2.grid(row=2, column=1, pady=12, padx=(30,10))
+        self.entry2 = customtkinter.CTkEntry(self.frame, placeholder_text="Enter Light IP Address", width=250, height=40)
+        self.entry2.grid(row=1, column=1, pady=(190,10), padx=(230,10), sticky='nw')
 
         # Add Light Button
-        button = customtkinter.CTkButton(self.frame, text="Add Light", fg_color="#44dd45", hover_color="#02c910", text_color="black", font=customtkinter.CTkFont(size=18), width=150, height=40, border_width=3, border_color="white")
-        button.grid(row=3, column=1, pady=(12,100), padx=(50,200))
+        button = customtkinter.CTkButton(self.frame, text="Add Light", command=self.addlight, fg_color="#44dd45", hover_color="#02c910", text_color="black", font=customtkinter.CTkFont(size=18), width=150, height=40, border_width=3, border_color="white")
+        button.grid(row=1, column=1, pady=(270,200), padx=(195,200), sticky='nw')
 
         # View All Lights Button
         button = customtkinter.CTkButton(self.frame, text="View All Lights", command=self.open_lightslist, fg_color="#44dd45", hover_color="#02c910", text_color="black", font=customtkinter.CTkFont(size=18), width=150, height=40, border_width=3, border_color="white")
-        button.grid(row=3, column=1, pady=(12,100), padx=(200,10))
+        button.grid(row=1, column=1, pady=(270,200), padx=(355,10), sticky='nw')
 
 
         # Default Values
@@ -152,6 +159,24 @@ class App(customtkinter.CTk):
     def open_lightslist(self):
         subprocess.Popen(["python", "lightslist.py"])
         self.destroy()
+        
+    # Add Light Command
+    def addlight(self):
+        
+        #with open("demofile.txt", "a") as f:
+            # Append the new light information to the file
+            #f.write(f"{self.entry1.get()},{self.entry2.get()}\n")
+        
+        light_names.append(self.entry1.get())
+        ip_addresses.append(self.entry2.get())
+        
+        # Optionally, you can write the new data back to the file if needed
+        with open("database.txt", "a") as f:
+            f.write(f"{self.entry1.get()},{self.entry2.get()}\n")
+       
+        
+
+        
 
     # Change Appearance Mode
     def change_appearance_mode_event(self, new_appearance_mode: str):
@@ -167,5 +192,10 @@ class App(customtkinter.CTk):
         self.destroy()
 
 if __name__ == "__main__":
+    light_names, ip_addresses = get_light_information()
+    print("Light Names:", light_names)
+    print("IP Addresses:", ip_addresses)
+    print("Number of Lines in the Array:", len(light_names))
     app = App()
     app.mainloop()
+    

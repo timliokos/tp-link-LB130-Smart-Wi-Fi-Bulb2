@@ -15,7 +15,7 @@ def main():
     '''
 
     # create an instance of the light with its IP address
-    light = LB130("192.168.1.103")  
+    light = LB130("192.168.1.100")  
 
     # fetch the details for the light
     print("Device ID: " + light.device_id)
@@ -48,9 +48,9 @@ def main():
     time.sleep(1)
 
     # set the colour to warm white and the brightness to 0
-    light.temperature = 6000
+    light.temperature = 3000
     #light.hue = 240
-    light.brightness = 0
+    light.brightness = 50
     
 
 if __name__ == "__main__":

@@ -3,9 +3,12 @@ import tkinter.messagebox
 import customtkinter
 import subprocess
 import time
+import math
 from tplight import LB130
 import pygame
 import threading
+from PIL import Image, ImageTk
+
 
 # Appearance Settings
 customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
@@ -15,6 +18,8 @@ customtkinter.set_default_color_theme("dark-blue")  # Themes: "blue" (standard),
 class App(customtkinter.CTk):
     def __init__(self):
         super().__init__()
+
+
 
         # Configure Window
         self.title("D633 Lights/Music Management System")
@@ -35,9 +40,13 @@ class App(customtkinter.CTk):
         self.sidebar_frame.grid_rowconfigure(5, weight=1)
 
         # Logo Label
-        self.logo_label = customtkinter.CTkLabel(self.sidebar_frame, text="D633 LMMS",
-                                                 font=customtkinter.CTkFont(size=20, weight="bold"))
-        self.logo_label.grid(row=0, column=0, padx=20, pady=(20, 10))
+        imagesb = tkinter.PhotoImage(file="images/d633logosm2.png")
+        new_width = 10
+        new_height = 10
+        resized_imagesb = imagesb.subsample(new_width, new_height)
+        self.sidebar_button_sb = customtkinter.CTkButton(self.sidebar_frame, image=resized_imagesb, text="", fg_color="#212121", hover_color="#212121", width=50, height=40)
+        self.sidebar_button_sb.grid(row=0, column=0, padx=0, pady=(20,20))
+        self.sidebar_button_sb.icon = resized_imagesb
 
         # Home Button
         self.sidebar_button_1 = customtkinter.CTkButton(self.sidebar_frame, text="Home",
@@ -97,54 +106,68 @@ class App(customtkinter.CTk):
 
         middle_row = total_rows // 2
 
-        self.frame.grid(row=1, column=1, padx=20, pady=(20,10))
+        self.frame.grid(row=1, column=1, padx=20, pady=(10,10))
 
-        # Music Icon
-        image1 = tkinter.PhotoImage(file="musiciconwhite.png")
-        new_width = 15
-        new_height = 15
+        
+
+        # Page Header
+        image1 = tkinter.PhotoImage(file="images/musiciconwhite.png")
+        new_width = 17
+        new_height = 17
         resized_image1 = image1.subsample(new_width, new_height)
-        self.button_3 = customtkinter.CTkButton(self.frame, image=resized_image1, text="", fg_color="#212121", hover_color="#212121", font=customtkinter.CTkFont(size=18), width=50, height=40)
-        self.button_3.grid(row=0, column=1, padx=(85,20), pady=(10,0))
+        self.button_3 = customtkinter.CTkButton(self.frame, image=resized_image1, text="Music Player", fg_color="#1a1a1a", hover_color="#1a1a1a", font=customtkinter.CTkFont(size=30, weight="bold"), width=650, height=50)
+        self.button_3.grid(row=1, column=1, columnspan=3, padx=(25,0), pady=(10, 10), sticky='nw')
         self.button_3.icon = resized_image1
 
-        # Page Heading
-        self.label = customtkinter.CTkLabel(self.frame, text="        Music Player", font=customtkinter.CTkFont(size=30, weight="bold"))
-        self.label.grid(row=1, column=1, padx=20, pady=(0, 40))
-
         # Dummy label for col 0
-        self.labeld = customtkinter.CTkLabel(self.frame, text="                           ", font=customtkinter.CTkFont(size=15))
-        self.labeld.grid(row=1, column=0, padx=20, pady=(10, 10), sticky="nw")
+        #self.labeld = customtkinter.CTkLabel(self.frame, text="                           ", font=customtkinter.CTkFont(size=15))
+        #self.labeld.grid(row=1, column=0, padx=20, pady=(10, 10), sticky="nw")
+
+        # Song Label
+        self.doorbutton = customtkinter.CTkButton(self.frame, text="Song", fg_color="#1a1a1a", hover_color="#1a1a1a", text_color="white", font=customtkinter.CTkFont(size=12), width=240, height=20, border_width=0, border_color="white")
+        self.doorbutton.grid(row=1, column=1, padx=(230,10), pady=(75,0), sticky='nw')
 
         # Song Menu
-        self.label1 = customtkinter.CTkLabel(self.frame, text="Song:", font=customtkinter.CTkFont(size=15))
-        self.label1.grid(row=2, column=1, padx=(20,20), pady=(20, 20), sticky="nw")
-        
-        self.option_menu = customtkinter.CTkOptionMenu(self.frame, values=["TFP - Happy Day", "Red Skies - Laugh Now"])
-        self.option_menu.grid(row=2, column=1, padx=(80,10), pady=(10, 10))
+        self.option_menu = customtkinter.CTkOptionMenu(self.frame, values=["RFM - Trap Future Bass", "Red Skies - Laugh Now", "TFP - Happy Day"])
+        self.option_menu.grid(row=1, column=1, padx=(225,10), pady=(115, 10), stick='nw')
         self.option_menu.configure(width=250, height=30, font=customtkinter.CTkFont(size=20), fg_color="white", button_color="#4d4d4d", button_hover_color="#44dd45", text_color="black")
         
         # Light Show Switch
-        self.switch_1 = customtkinter.CTkSwitch(self.frame, text="Light Show", font=customtkinter.CTkFont(size=20),
-                                   onvalue="on", offvalue="off", switch_width=65, switch_height=30, progress_color="#44dd45")
-        self.switch_1.grid(row=3, column=1,padx=(80,20), pady=(10, 70))
+        #self.switch_1 = customtkinter.CTkSwitch(self.frame, text="Light Show", font=customtkinter.CTkFont(size=20),
+                                   #onvalue="on", offvalue="off", switch_width=65, switch_height=30, progress_color="#44dd45")
+        #self.switch_1.grid(row=1, column=1,padx=(35,20), pady=(190, 70), sticky='nw')
 
-        # Play Song Button
-        image1 = tkinter.PhotoImage(file="play.png")
-        new_width = 15
-        new_height = 15
+        #Progress Bar
+        self.progressbar = customtkinter.CTkProgressBar(self.frame, determinate_speed=0.008)
+        self.progressbar.grid(row=1, column=1, padx=(245,10), pady=(350, 10), stick='nw')
+
+        self.progressbar.set(0)
+
+        # Play Button
+        image1 = tkinter.PhotoImage(file="images/newplay.png")
+        new_width = 25
+        new_height = 25
         resized_image1 = image1.subsample(new_width, new_height)
-        self.button_3 = customtkinter.CTkButton(self.frame, image=resized_image1, text="", fg_color="white", hover_color="#44dd45", font=customtkinter.CTkFont(size=18), width=50, height=40, command=self.play_song)
-        self.button_3.grid(row=6, column=1, padx=(0,20), pady=(10,100))
+        self.button_3 = customtkinter.CTkButton(self.frame, image=resized_image1, text="", fg_color="#212121", hover_color="#44dd45", font=customtkinter.CTkFont(size=18), width=50, height=40, command=self.play_song)
+        self.button_3.grid(row=1, column=1, padx=(0,20), pady=(380,60))
         self.button_3.icon = resized_image1
 
-        # Pause Song Button
-        image2 = tkinter.PhotoImage(file="pause.png")
-        new_width = 15
-        new_height = 15
+        # Pause Button
+        image2 = tkinter.PhotoImage(file="images/newpause.png")
+        new_width = 25
+        new_height = 25
         resized_image2 = image2.subsample(new_width, new_height)
-        self.button_4 = customtkinter.CTkButton(self.frame, image=resized_image2, text="", fg_color="white", hover_color="#44dd45", font=customtkinter.CTkFont(size=18), width=50, height=40, command=self.pause_song)
-        self.button_4.grid(row=6, column=1, padx=(160,20), pady=(10,100))
+        self.button_4 = customtkinter.CTkButton(self.frame, image=resized_image2, text="", fg_color="#212121", hover_color="#44dd45", font=customtkinter.CTkFont(size=18), width=50, height=40, command=self.pause_song)
+        self.button_4.grid(row=1, column=1, padx=(160,20), pady=(380,60))
+        self.button_4.icon = resized_image2
+        
+        # Stop Button
+        image2 = tkinter.PhotoImage(file="images/newstop.png")
+        new_width = 25
+        new_height = 25
+        resized_image2 = image2.subsample(new_width, new_height)
+        self.button_4 = customtkinter.CTkButton(self.frame, image=resized_image2, text="", fg_color="#212121", hover_color="#44dd45", font=customtkinter.CTkFont(size=18), width=50, height=40, command=self.pause_song)
+        self.button_4.grid(row=1, column=1, padx=(320,20), pady=(380,60))
         self.button_4.icon = resized_image2
         
 
@@ -190,17 +213,22 @@ class App(customtkinter.CTk):
         # Create a new thread to handle music playback
         self.music_thread = threading.Thread(target=self._play_music, args=(selected_song,))
         self.music_thread.start()
+        
+        self.progressbar.start()
 
     # Play Selected Song From Song Map
     def _play_music(self, selected_song):
         song_map = {
-            "TFP - Happy Day": "happy-day.mp3",
-            "Red Skies - Laugh Now": "laugh-now.mp3",
+            "RFM - Trap Future Bass": "music/trap-future-bass.mp3",
+            "Red Skies - Laugh Now": "music/laugh-now.mp3",
+            "TFP - Happy Day": "music/happy-day.mp3",
             }
         if selected_song in song_map:
             pygame.mixer.init()
             pygame.mixer.music.load(song_map[selected_song])
             pygame.mixer.music.play()
+            
+            self.get_album_cover(selected_song, self.option_menu)
         else:
             return
 
@@ -208,6 +236,7 @@ class App(customtkinter.CTk):
     def pause_song(self):
         if pygame.mixer.music.get_busy():
             pygame.mixer.music.pause()
+            self.progressbar.stop()
 
     # Open Home Page
     def return_home(self):
@@ -228,7 +257,50 @@ class App(customtkinter.CTk):
     def open_addmorelights(self):
         subprocess.Popen(["python", "addmorelights.py"])
         self.destroy()
+        
+    def get_album_cover(self, song_name, option_menu):
+        list_of_covers = ['images/trapfuturebass.jpg','images/laughnow.jpg','images/happyday.jpg']
+        n=0
+    
+        #test switch case
+        selected_song = option_menu.get()
+        if selected_song == "RFM - Trap Future Bass":
+            n = 0
+        elif selected_song == "Red Skies - Laugh Now":
+            n = 1
+        elif selected_song == "TFP - Happy Day":
+            n = 2
 
+        image1 = Image.open(list_of_covers[n])
+        image2=image1.resize((250, 250))
+        load = ImageTk.PhotoImage(image2)
+    
+        label1 = tkinter.Label(self.frame, image=load)
+        label1.image = load
+        label1.grid(row=1, column=1, padx=(230,10), pady=(20, 10))
+
+        stripped_string = song_name[6::] #This is to exlude the other characters
+                                                    # 6       :      -4
+                                        # Example: 'music/ | City | .wav'
+                                        # This works because the music will always be between those 2 values
+    
+        song_name_label = tkinter.Label(text = song_name, bg='#222222', fg='white')
+        song_name_label.grid(row=1, column=1, padx=(427,10), pady=(268, 10), sticky='nw')
+
+
+
+        def progress(self):
+            list_of_songs = ['music/trap-future-bass.mp3', 'music/laugh-now.mp3', 'music/happy-day.mp3']
+            
+            a = pygame.mixer.Sound(f'{list_of_songs[n]}')
+            song_len = a.get_length() * 3
+            for i in range(0, math.ceil(song_len)):
+                time.sleep(.4)
+                self.progressbar.set(pygame.mixer.music.get_pos() / 1000000)
+
+        def threading():
+            t1 = threading.Thread(target=progress)
+            t1.start()
 
 if __name__ == "__main__":
     app = App()
