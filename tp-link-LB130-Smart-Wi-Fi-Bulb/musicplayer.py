@@ -89,11 +89,7 @@ class App(customtkinter.CTk):
         self.main_button_1.grid(row=6, column=2, padx=(20, 20), pady=(5, 20), sticky="nsew")
         self.main_button_1.configure(command=self.close_window)
 
-        # Return Button
-        self.main_button_2 = customtkinter.CTkButton(self.sidebar_frame2, text="Return", fg_color="transparent",
-                                                     border_width=2, text_color=("gray10", "#DCE4EE"))
-        self.main_button_2.grid(row=5, column=2, padx=(20, 20), pady=(20, 5), sticky="nsew")
-        self.main_button_2.configure(command=self.return_home)
+       
 
 
 
@@ -129,45 +125,48 @@ class App(customtkinter.CTk):
 
         # Song Menu
         self.option_menu = customtkinter.CTkOptionMenu(self.frame, values=["RFM - Trap Future Bass", "Red Skies - Laugh Now", "TFP - Happy Day"])
-        self.option_menu.grid(row=1, column=1, padx=(225,10), pady=(115, 10), stick='nw')
-        self.option_menu.configure(width=250, height=30, font=customtkinter.CTkFont(size=20), fg_color="white", button_color="#4d4d4d", button_hover_color="#44dd45", text_color="black")
+        self.option_menu.grid(row=1, column=1, padx=(230,10), pady=(105, 10), stick='nw')
+        self.option_menu.configure(width=240, height=30, font=customtkinter.CTkFont(size=18), fg_color="#efefef", button_color="#1f538d", button_hover_color="#163b65", text_color="black")
         
         # Light Show Switch
         #self.switch_1 = customtkinter.CTkSwitch(self.frame, text="Light Show", font=customtkinter.CTkFont(size=20),
                                    #onvalue="on", offvalue="off", switch_width=65, switch_height=30, progress_color="#44dd45")
         #self.switch_1.grid(row=1, column=1,padx=(35,20), pady=(190, 70), sticky='nw')
 
+        self.albumbutton = customtkinter.CTkButton(self.frame, text = "", fg_color="#1a1a1a", hover_color="#1a1a1a", width=185, height=185)
+        self.albumbutton.grid(row=1, column=1, padx=(260,10), pady=(155,0), sticky='nw')
+        
         #Progress Bar
-        self.progressbar = customtkinter.CTkProgressBar(self.frame, determinate_speed=0.008)
-        self.progressbar.grid(row=1, column=1, padx=(245,10), pady=(350, 10), stick='nw')
+        self.progressbar = customtkinter.CTkProgressBar(self.frame, determinate_speed=0.008, width=300)
+        self.progressbar.grid(row=1, column=1, padx=(200,10), pady=(350, 10), stick='nw')
 
         self.progressbar.set(0)
 
         # Play Button
         image1 = tkinter.PhotoImage(file="images/newplay.png")
-        new_width = 25
-        new_height = 25
+        new_width = 35
+        new_height = 35
         resized_image1 = image1.subsample(new_width, new_height)
-        self.button_3 = customtkinter.CTkButton(self.frame, image=resized_image1, text="", fg_color="#212121", hover_color="#44dd45", font=customtkinter.CTkFont(size=18), width=50, height=40, command=self.play_song)
-        self.button_3.grid(row=1, column=1, padx=(0,20), pady=(380,60))
+        self.button_3 = customtkinter.CTkButton(self.frame, image=resized_image1, text="", fg_color="#212121", hover_color="#1f538d", font=customtkinter.CTkFont(size=18), width=50, height=40, command=self.play_song)
+        self.button_3.grid(row=1, column=1, padx=(20,20), pady=(380,60))
         self.button_3.icon = resized_image1
 
         # Pause Button
         image2 = tkinter.PhotoImage(file="images/newpause.png")
-        new_width = 25
-        new_height = 25
+        new_width = 35
+        new_height = 35
         resized_image2 = image2.subsample(new_width, new_height)
-        self.button_4 = customtkinter.CTkButton(self.frame, image=resized_image2, text="", fg_color="#212121", hover_color="#44dd45", font=customtkinter.CTkFont(size=18), width=50, height=40, command=self.pause_song)
+        self.button_4 = customtkinter.CTkButton(self.frame, image=resized_image2, text="", fg_color="#212121", hover_color="#1f538d", font=customtkinter.CTkFont(size=18), width=50, height=40, command=self.pause_song)
         self.button_4.grid(row=1, column=1, padx=(160,20), pady=(380,60))
         self.button_4.icon = resized_image2
         
         # Stop Button
         image2 = tkinter.PhotoImage(file="images/newstop.png")
-        new_width = 25
-        new_height = 25
+        new_width = 35
+        new_height = 35
         resized_image2 = image2.subsample(new_width, new_height)
-        self.button_4 = customtkinter.CTkButton(self.frame, image=resized_image2, text="", fg_color="#212121", hover_color="#44dd45", font=customtkinter.CTkFont(size=18), width=50, height=40, command=self.pause_song)
-        self.button_4.grid(row=1, column=1, padx=(320,20), pady=(380,60))
+        self.button_4 = customtkinter.CTkButton(self.frame, image=resized_image2, text="", fg_color="#212121", hover_color="#1f538d", font=customtkinter.CTkFont(size=18), width=50, height=40, command=self.stop_song)
+        self.button_4.grid(row=1, column=1, padx=(300,20), pady=(380,60))
         self.button_4.icon = resized_image2
         
 
@@ -214,6 +213,7 @@ class App(customtkinter.CTk):
         self.music_thread = threading.Thread(target=self._play_music, args=(selected_song,))
         self.music_thread.start()
         
+        self.progressbar.set(0)
         self.progressbar.start()
 
     # Play Selected Song From Song Map
@@ -234,6 +234,15 @@ class App(customtkinter.CTk):
 
     # Pause Song
     def pause_song(self):
+        self.elapsed_time = 0
+        self.playing = False
+        
+        if pygame.mixer.music.get_busy():
+            pygame.mixer.music.pause()
+            self.progressbar.stop()
+            
+    # Stop Song
+    def stop_song(self):
         if pygame.mixer.music.get_busy():
             pygame.mixer.music.pause()
             self.progressbar.stop()
@@ -277,7 +286,7 @@ class App(customtkinter.CTk):
     
         label1 = tkinter.Label(self.frame, image=load)
         label1.image = load
-        label1.grid(row=1, column=1, padx=(230,10), pady=(20, 10))
+        label1.grid(row=1, column=1, padx=(220,10), pady=(26, 10))
 
         stripped_string = song_name[6::] #This is to exlude the other characters
                                                     # 6       :      -4
@@ -285,7 +294,7 @@ class App(customtkinter.CTk):
                                         # This works because the music will always be between those 2 values
     
         song_name_label = tkinter.Label(text = song_name, bg='#222222', fg='white')
-        song_name_label.grid(row=1, column=1, padx=(427,10), pady=(268, 10), sticky='nw')
+        song_name_label.grid(row=1, column=1, padx=(433,10), pady=(260, 10), sticky='nw')
 
 
 

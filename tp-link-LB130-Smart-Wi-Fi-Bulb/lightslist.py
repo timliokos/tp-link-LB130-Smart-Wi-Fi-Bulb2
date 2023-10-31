@@ -118,8 +118,8 @@ class App(customtkinter.CTk):
         self.table.grid(row=1, column=1, padx=(230, 20), pady=(10, 10), sticky="nw")
         
         # Add Light Button
-        button = customtkinter.CTkButton(self.frame, text="Add Light", command=self.open_addmorelights, fg_color="#44dd45", hover_color="#02c910", text_color="black", font=customtkinter.CTkFont(size=18), width=150, height=40, border_width=3, border_color="white")
-        button.grid(row=3, column=1, pady=(360,100), padx=(370,200))
+        button = customtkinter.CTkButton(self.frame, text="Add Light", command=self.open_addmorelights, fg_color="#1f538d", hover_color="#163b65", text_color="white", font=customtkinter.CTkFont(size=18), width=150, height=40, border_width=1, border_color="white")
+        button.grid(row=3, column=1, pady=(360,100), padx=(380,200))
 
         # Default Values
         self.appearance_mode_optionmenu.set("Dark")

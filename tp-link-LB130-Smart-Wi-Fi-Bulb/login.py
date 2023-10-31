@@ -13,9 +13,8 @@ root = customtkinter.CTk()
 root.geometry("1100x480")
 
 
-
 # Login Method
-def login():
+def login(event=None):
      
     username = entry1.get()
     password = entry2.get()
@@ -27,7 +26,6 @@ def login():
         root.destroy()
     else:
         print("Invalid username or password")
-
 
 
 # Login Frame
@@ -56,8 +54,11 @@ entry2 = customtkinter.CTkEntry(master=frame, placeholder_text="Password", show=
 entry2.pack(pady=12, padx=10)
 
 # Login Button
-button = customtkinter.CTkButton(master=frame, text="Login", command=login, fg_color="#44dd45", hover_color="#02c910", text_color="black", font=customtkinter.CTkFont(size=18), width=150, height=40, border_width=3, border_color="white")
+button = customtkinter.CTkButton(master=frame, text="Login", command=login, fg_color="#1f538d", hover_color="#163b65", text_color="white", font=customtkinter.CTkFont(size=18), width=150, height=40, border_width=1, border_color="white")
 button.pack(pady=12, padx=10)
+
+# Binding 'Enter' Key as Login
+root.bind('<Return>', login)
 
 # Start Main Event Loop
 root.mainloop()
