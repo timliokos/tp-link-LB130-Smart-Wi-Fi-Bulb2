@@ -158,16 +158,41 @@ class App(customtkinter.CTk):
         
     # Add Light Command
     def addlight(self):
+        light_name = self.entry1.get()
+        ip_address = self.entry2.get()    
         
-        # Append inputs into respective lists
-        light_names.append(self.entry1.get())
-        ip_addresses.append(self.entry2.get())
+        if not light_name or not ip_address:
+            # One or both fields are empty, display an error message
+            error_text = "Error: Both fields must be filled!"
+            self.error_label = customtkinter.CTkButton(self.frame, text=error_text, font=customtkinter.CTkFont(size=16), fg_color="#1a1a1a", hover_color="#1a1a1a", text_color=("red"))
+            self.error_label.grid(row=1, column=1, pady=(330, 200), padx=(245, 10), sticky='nw')
         
-        # Write new data back to database
-        with open("database.txt", "a") as f:
-            f.write(f"{self.entry1.get()},{self.entry2.get()}\n")
+            # Schedule the error message to disappear after 5 seconds
+            self.after(5000, self.hide_error)
+        else:
             
+            # Append inputs into respective lists
+            light_names.append(self.entry1.get())
+            ip_addresses.append(self.entry2.get())
+        
+            # Write new data back to database
+            with open("database.txt", "a") as f:
+                f.write(f"{self.entry1.get()},{self.entry2.get()}\n")
+            
+            confirmation_text = f"Light {self.entry1.get()} has been added!"
+            self.confirmation = customtkinter.CTkButton(self.frame, text=confirmation_text, font=customtkinter.CTkFont(size=16), fg_color="#1a1a1a", hover_color="#1a1a1a", text_color=("green"))
+            self.confirmation.grid(row=1, column=1, pady=(330, 200), padx=(245, 10), sticky='nw')
+        
+            self.after(5000, self.hide_confirmation)
        
+    # Hide Confirmation
+    def hide_confirmation(self):
+        self.confirmation.grid_forget()
+        
+    # Hide Error
+    def hide_error(self):
+        self.error_label.grid_forget()
+
     # Change Appearance Mode
     def change_appearance_mode_event(self, new_appearance_mode: str):
         customtkinter.set_appearance_mode(new_appearance_mode)

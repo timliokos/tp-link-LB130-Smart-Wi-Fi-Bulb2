@@ -1,9 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\images",
-    "\\music"
+    ""
   ],
-  "SelectedNode": "\\lecteur.py",
+  "SelectedNode": "\\lightcontrol.py",
   "PreviewInSolutionExplorer": false
 }
