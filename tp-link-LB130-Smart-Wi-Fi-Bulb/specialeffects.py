@@ -2,6 +2,10 @@ import tkinter
 import tkinter.messagebox
 import customtkinter
 import subprocess
+import threading
+import time
+from tplight import LB130
+from main2 import *
 
 # Appearance Settings
 customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
@@ -113,8 +117,9 @@ class App(customtkinter.CTk):
         # Effect Menu
         # Effect 1
         self.button_1 = customtkinter.CTkButton(self.frame, text="Christmas Lights", font=customtkinter.CTkFont(size=20),
-                                                        command=self.start_flashing_gr, width=300, height=50, fg_color="#44dd45", hover_color="#02c910", text_color="black", border_width=3, border_color="red")
+                                                        command=self.start_flashing12, width=300, height=50, fg_color="#44dd45", hover_color="#02c910", text_color="black", border_width=3, border_color="red")
         self.button_1.grid(row=2, column=1, padx=(200,20), pady=(100,15), sticky='nw')
+        
         
         # Effect 2
         self.button_2 = customtkinter.CTkButton(self.frame, text="Police Lights", font=customtkinter.CTkFont(size=20),
@@ -198,6 +203,8 @@ class App(customtkinter.CTk):
 
         self.after_id = self.after(500, self.flash_gr, new_circle1_state, new_circle2_state)
 
+
+
     def start_flashing_gr(self):
         if self.after_id is not None:
             self.after_cancel(self.after_id)  # Stop the current flashing if any
@@ -271,9 +278,24 @@ class App(customtkinter.CTk):
         if self.after_id is not None:
             self.after_cancel(self.after_id)  # Stop the current flashing if any
         self.after_id = self.after(500, self.flash_pw, True, False)
+        
 
-    
+
+
+
+
+
+    def christmaslights(bulb_ips):
+        bulb_ips = [ '192.168.1.100', '192.168.1.101', '192.168.1.102', '192.168.1.103', '192.168.1.104', '192.168.1.105',#
+                '192.168.1.106', '192.168.1.107', '192.168.1.108', '192.168.1.109', '192.168.1.110', '192.168.1.111',
+                '192.168.1.112', '192.168.1.113', '192.168.1.114', ]
+        controlBulbs_parallel(bulb_ips)
+
+
 
 if __name__ == "__main__":
+    
     app = App()
+    
     app.mainloop()
+    

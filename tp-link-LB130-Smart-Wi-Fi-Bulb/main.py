@@ -25,16 +25,16 @@ def controlBulbs(bulb_ips):
             light.transition_period = 0
 
             #set brightness
-            light.brightness = 50
+            light.brightness = 20
             time.sleep(0)
             
             #setsaturation
             light.saturation = 90
             time.sleep(0)
 
-            for hue in range(0, 360, 60, ):  # Cycle through hues in increments of 10
+            for hue in range(0, 360, 1, ):  # Cycle through hues in increments of 10
                 light.hue = hue
-                time.sleep(0)
+                time.sleep(0.01)
             
         except Exception as e:
             print(f"Error controlling bulb at {bulb_ips}: {str(e)}")

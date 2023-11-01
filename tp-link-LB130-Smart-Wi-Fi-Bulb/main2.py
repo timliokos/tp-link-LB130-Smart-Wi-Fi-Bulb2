@@ -15,25 +15,45 @@ def controlBulbs_parallel(bulb_ips):
         thread.join()
         
 def controlBulbs(bulb_ips):
+    
      for bulb_ip in bulb_ips:
+        
+        
         try:
             light = LB130(bulb_ips)
             
-            light.transition_period = 0
-            light.brightness = 50
-            time.sleep(0)
-            light.saturation = 90
-            time.sleep(0)
-            light.hue = 240
-            time.sleep(1)
-            light.transition_period = 0
-            light.brightness = 50
-            time.sleep(0)
-            light.saturation = 90
-            time.sleep(0)
+            #light.transition_period = 0
+
             light.hue = 0
-            time.sleep(1)
-            
+            time.sleep(0)
+            light.brightness = 10
+            time.sleep(0)
+            light.saturation = 90
+            time.sleep(0.75)
+            light.hue = 120
+            time.sleep(0.75)
+            light.hue = 0
+            time.sleep(0.75)
+            light.hue = 120
+            time.sleep(0.75)
+            light.hue = 0
+            time.sleep(0.75)
+            light.hue = 120
+            time.sleep(0.75)
+            light.hue = 0
+            time.sleep(0.75)
+            light.hue = 120
+            time.sleep(0.75)
+            light.hue = 0
+            time.sleep(0.75)
+            light.hue = 120
+            time.sleep(0.75)
+            light.hue = 0
+            time.sleep(0.75)
+            light.hue = 120
+            time.sleep(0.75)
+            light.hue = 0
+            time.sleep(0.75)
             
         except Exception as e:
             print(f"Error controlling bulb at {bulb_ips}: {str(e)}")
