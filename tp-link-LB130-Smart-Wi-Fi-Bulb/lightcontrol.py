@@ -132,9 +132,9 @@ class App(customtkinter.CTk):
 
 
         # Page Header
-        image1 = tkinter.PhotoImage(file="images/lighticonwhite.png")
-        new_width = 17
-        new_height = 17
+        image1 = tkinter.PhotoImage(file="images/lai.png")
+        new_width = 35
+        new_height = 35
         resized_image1 = image1.subsample(new_width, new_height)
         self.button_3 = customtkinter.CTkButton(self.frame, image=resized_image1, text="Light Control", fg_color="#1a1a1a", hover_color="#1a1a1a", font=customtkinter.CTkFont(size=30, weight="bold"), width=650, height=50)
         self.button_3.grid(row=1, column=1, columnspan=3, padx=(25,0), pady=(10, 10), sticky='nw')

@@ -5,7 +5,7 @@ import subprocess
 import threading
 import time
 from tplight import LB130
-from main2 import *
+from effectscode import *
 
 # Appearance Settings
 customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
@@ -106,43 +106,51 @@ class App(customtkinter.CTk):
         self.frame.grid(row=1, column=1, padx=20, pady=(10,10))
 
         # Page Header
-        image1 = tkinter.PhotoImage(file="images/christmasiconwhite.png")
-        new_width = 17
-        new_height = 17
+        image1 = tkinter.PhotoImage(file="images/sei.png")
+        new_width = 35
+        new_height = 35
         resized_image1 = image1.subsample(new_width, new_height)
         self.button_3 = customtkinter.CTkButton(self.frame, image=resized_image1, text="Special Effects", fg_color="#1a1a1a", hover_color="#1a1a1a", font=customtkinter.CTkFont(size=30, weight="bold"), width=650, height=50)
         self.button_3.grid(row=1, column=1, columnspan=3, padx=(25,0), pady=(10, 10), sticky='nw')
         self.button_3.icon = resized_image1
 
         # Effect Menu
-        # Effect 1
-        self.button_1 = customtkinter.CTkButton(self.frame, text="Christmas Lights", font=customtkinter.CTkFont(size=20),
-                                                        command=self.start_flashing12, width=300, height=50, fg_color="#44dd45", hover_color="#02c910", text_color="black", border_width=3, border_color="red")
-        self.button_1.grid(row=2, column=1, padx=(200,20), pady=(100,15), sticky='nw')
+        # Christmas Lights Effect
+        imagecl = tkinter.PhotoImage(file="images/CHRLIG3.png")
+        new_width = 4
+        new_height = 4
+        resized_imagecl = imagecl.subsample(new_width, new_height)
+        self.button_1 = customtkinter.CTkButton(self.frame, image=resized_imagecl, text="",
+                                                        command=self.christmaslights, width=100, height=77, fg_color="#1a1a1a", hover_color="white", text_color="black")
+        self.button_1.grid(row=2, column=1, padx=(177,20), pady=(10,15), sticky='nw')
         
         
-        # Effect 2
-        self.button_2 = customtkinter.CTkButton(self.frame, text="Police Lights", font=customtkinter.CTkFont(size=20),
-                                                        command=self.start_flashing_br, width=300, height=50, fg_color="blue", hover_color="#0e93e8", text_color="black", border_width=3, border_color="red")
-        self.button_2.grid(row=2, column=1, padx=(200,20), pady=(155,10), sticky='nw')
+        # Police Lights Effect
+        imagecl = tkinter.PhotoImage(file="images/POLLIG3.png")
+        new_width = 4
+        new_height = 4
+        resized_imagepl = imagecl.subsample(new_width, new_height)
+        self.button_2 = customtkinter.CTkButton(self.frame, image=resized_imagepl, text="",
+                                                        command=self.policelights, width=100, height=77, fg_color="#1a1a1a", hover_color="white", text_color="black")
+        self.button_2.grid(row=2, column=1, padx=(177,20), pady=(105,10), sticky='nw')
 
-        # Effect 3
-        self.button_3 = customtkinter.CTkButton(self.frame, text="Hazard Lights", font=customtkinter.CTkFont(size=20),
-                                                        command=self.start_flashing_hl, width=300, height=50, fg_color="orange", hover_color="yellow", text_color="black", border_width=3, border_color="white")
-        self.button_3.grid(row=2, column=1, padx=(200,20), pady=(210,20), sticky='nw')
+        # Hazard Lights Effect
+        imagecl = tkinter.PhotoImage(file="images/HAZLIG3.png")
+        new_width = 4
+        new_height = 4
+        resized_imagepl = imagecl.subsample(new_width, new_height)
+        self.button_2 = customtkinter.CTkButton(self.frame, image=resized_imagepl, text="",
+                                                        command=self.hazardlights, width=100, height=77, fg_color="#1a1a1a", hover_color="white", text_color="black")
+        self.button_2.grid(row=2, column=1, padx=(177,20), pady=(200,10), sticky='nw')
 
-        # Effect 4
-        self.button_4 = customtkinter.CTkButton(self.frame, text="Merry Go Round", font=customtkinter.CTkFont(size=20),
-                                                        command=self.start_flashing_pw, width=300, height=50, fg_color="purple", hover_color="#f902e5", text_color="black", border_width=3, border_color="white")
-        self.button_4.grid(row=2, column=1, padx=(200,20), pady=(265,100), sticky='nw')
-
-
-        # Testing SE Light
-        self.circle1 = customtkinter.CTkButton(self.frame, text="", width=30, height=30, fg_color="white", hover_color="white", border_width=1, border_color="black", corner_radius=20)
-        self.circle1.grid(row=2, column=1, padx=(290,20), pady=(30,0), sticky='nw')
-
-        self.circle2 = customtkinter.CTkButton(self.frame, text="", width=30, height=30, fg_color="white", hover_color="white", border_width=1, border_color="black", corner_radius=20)
-        self.circle2.grid(row=2, column=1, padx=(390,20), pady=(30,0), sticky='nw')
+        # Merry Go Round Effect
+        imagecl = tkinter.PhotoImage(file="images/MGRLIG3.png")
+        new_width = 4
+        new_height = 4
+        resized_imagepl = imagecl.subsample(new_width, new_height)
+        self.button_2 = customtkinter.CTkButton(self.frame, image=resized_imagepl, text="",
+                                                        command=self.merrygoround, width=100, height=77, fg_color="#1a1a1a", hover_color="white", text_color="black")
+        self.button_2.grid(row=2, column=1, padx=(177,20), pady=(295,100), sticky='nw')
 
 
 
@@ -186,116 +194,35 @@ class App(customtkinter.CTk):
     def close_window(self):
         self.destroy()
 
-    # Play Christmas Light Example
-    def flash_gr(self, circle1_state, circle2_state):
-        if not circle1_state and not circle2_state:
-            return
-        
-        new_circle1_state = not circle1_state
-        new_circle2_state = not circle2_state
-
-        if circle1_state:
-            self.circle1.configure(fg_color="red")
-            self.circle2.configure(fg_color="green")
-        else:
-            self.circle1.configure(fg_color="green")
-            self.circle2.configure(fg_color="red")
-
-        self.after_id = self.after(500, self.flash_gr, new_circle1_state, new_circle2_state)
-
-
-
-    def start_flashing_gr(self):
-        if self.after_id is not None:
-            self.after_cancel(self.after_id)  # Stop the current flashing if any
-        self.after_id = self.after(500, self.flash_gr, True, False)
-
-    # Play Police Light Example
-    def flash_br(self, circle1_state, circle2_state):
-         
-        if not circle1_state and not circle2_state:
-            return  # Stop flashing when both states are False
-
-        new_circle1_state = not circle1_state
-        new_circle2_state = not circle2_state
-
-        if circle1_state:
-            self.circle1.configure(fg_color="red")
-            self.circle2.configure(fg_color="blue")
-        else:
-            self.circle1.configure(fg_color="blue")
-            self.circle2.configure(fg_color="red")
-
-        self.after_id = self.after(500, self.flash_br, new_circle1_state, new_circle2_state)
-
-    def start_flashing_br(self):
-        if self.after_id is not None:
-            self.after_cancel(self.after_id)  # Stop the current flashing if any
-        self.after_id = self.after(500, self.flash_br, True, False)
-
-    # Play Hazard Light Example
-    def flash_hl(self, circle1_state, circle2_state):
-         
-        if not circle1_state and not circle2_state:
-            return  # Stop flashing when both states are False
-
-        new_circle1_state = not circle1_state
-        new_circle2_state = not circle2_state
-
-        if circle1_state:
-            self.circle1.configure(fg_color="orange")
-            self.circle2.configure(fg_color="orange")
-        else:
-            self.circle1.configure(fg_color="black")
-            self.circle2.configure(fg_color="black")
-
-        self.after_id = self.after(500, self.flash_hl, new_circle1_state, new_circle2_state)
-
-    def start_flashing_hl(self):
-        if self.after_id is not None:
-            self.after_cancel(self.after_id)  # Stop the current flashing if any
-        self.after_id = self.after(500, self.flash_hl, True, False)
-
-    # Play Merry Go Round Example
-    def flash_pw(self, circle1_state, circle2_state):
-         
-        if not circle1_state and not circle2_state:
-            return  # Stop flashing when both states are False
-
-        new_circle1_state = not circle1_state
-        new_circle2_state = not circle2_state
-
-        if circle1_state:
-            self.circle1.configure(fg_color="purple")
-            self.circle2.configure(fg_color="white")
-        else:
-            self.circle1.configure(fg_color="white")
-            self.circle2.configure(fg_color="purple")
-
-        self.after_id = self.after(500, self.flash_pw, new_circle1_state, new_circle2_state)
-
-    def start_flashing_pw(self):
-        if self.after_id is not None:
-            self.after_cancel(self.after_id)  # Stop the current flashing if any
-        self.after_id = self.after(500, self.flash_pw, True, False)
-        
-
-
-
-
 
 
     def christmaslights(bulb_ips):
         bulb_ips = [ '192.168.1.100', '192.168.1.101', '192.168.1.102', '192.168.1.103', '192.168.1.104', '192.168.1.105',#
                 '192.168.1.106', '192.168.1.107', '192.168.1.108', '192.168.1.109', '192.168.1.110', '192.168.1.111',
                 '192.168.1.112', '192.168.1.113', '192.168.1.114', ]
-        controlBulbs_parallel(bulb_ips)
+        runChristmas(bulb_ips)
+        
+    def policelights(bulb_ips):
+        bulb_ips = [ '192.168.1.100', '192.168.1.101', '192.168.1.102', '192.168.1.103', '192.168.1.104', '192.168.1.105',#
+                '192.168.1.106', '192.168.1.107', '192.168.1.108', '192.168.1.109', '192.168.1.110', '192.168.1.111',
+                '192.168.1.112', '192.168.1.113', '192.168.1.114', ]
+        runPolice(bulb_ips)
 
+    def hazardlights(bulb_ips):
+        bulb_ips = [ '192.168.1.100', '192.168.1.101', '192.168.1.102', '192.168.1.103', '192.168.1.104', '192.168.1.105',#
+                '192.168.1.106', '192.168.1.107', '192.168.1.108', '192.168.1.109', '192.168.1.110', '192.168.1.111',
+                '192.168.1.112', '192.168.1.113', '192.168.1.114', ]
+        runHazards(bulb_ips)
+        
+    def merrygoround(bulb_ips):
+        bulb_ips = [ '192.168.1.100', '192.168.1.101', '192.168.1.102', '192.168.1.103', '192.168.1.104', '192.168.1.105',#
+                '192.168.1.106', '192.168.1.107', '192.168.1.108', '192.168.1.109', '192.168.1.110', '192.168.1.111',
+                '192.168.1.112', '192.168.1.113', '192.168.1.114', ]
+        runMerrygo(bulb_ips)
 
 
 if __name__ == "__main__":
     
     app = App()
-    
     app.mainloop()
     

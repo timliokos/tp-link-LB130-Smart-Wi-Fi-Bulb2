@@ -8,12 +8,16 @@ from tplight import LB130
 import pygame
 import threading
 from PIL import Image, ImageTk
+from effectscode import *
 
 
 # Appearance Settings
 customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
 customtkinter.set_default_color_theme("dark-blue")  # Themes: "blue" (standard), "green", "dark-blue"
 
+bulb_ips = [ '192.168.1.100', '192.168.1.101', '192.168.1.102', '192.168.1.103', '192.168.1.104', '192.168.1.105',#
+                '192.168.1.106', '192.168.1.107', '192.168.1.108', '192.168.1.109', '192.168.1.110', '192.168.1.111',
+                '192.168.1.112', '192.168.1.113', '192.168.1.114', ]
 
 class App(customtkinter.CTk):
     def __init__(self):
@@ -107,9 +111,9 @@ class App(customtkinter.CTk):
         
 
         # Page Header
-        image1 = tkinter.PhotoImage(file="images/musiciconwhite.png")
-        new_width = 17
-        new_height = 17
+        image1 = tkinter.PhotoImage(file="images/mai.png")
+        new_width = 35
+        new_height = 35
         resized_image1 = image1.subsample(new_width, new_height)
         self.button_3 = customtkinter.CTkButton(self.frame, image=resized_image1, text="Music Player", fg_color="#1a1a1a", hover_color="#1a1a1a", font=customtkinter.CTkFont(size=30, weight="bold"), width=650, height=50)
         self.button_3.grid(row=1, column=1, columnspan=3, padx=(25,0), pady=(10, 10), sticky='nw')
@@ -215,6 +219,9 @@ class App(customtkinter.CTk):
         
         self.progressbar.set(0)
         self.progressbar.start()
+        
+        
+        #runPolice(bulb_ips)
 
     # Play Selected Song From Song Map
     def _play_music(self, selected_song):
@@ -298,18 +305,21 @@ class App(customtkinter.CTk):
 
 
 
-        def progress(self):
-            list_of_songs = ['music/trap-future-bass.mp3', 'music/laugh-now.mp3', 'music/happy-day.mp3']
+    def progress(self):
+        list_of_songs = ['music/trap-future-bass.mp3', 'music/laugh-now.mp3', 'music/happy-day.mp3']
             
-            a = pygame.mixer.Sound(f'{list_of_songs[n]}')
-            song_len = a.get_length() * 3
-            for i in range(0, math.ceil(song_len)):
-                time.sleep(.4)
-                self.progressbar.set(pygame.mixer.music.get_pos() / 1000000)
+        a = pygame.mixer.Sound(f'{list_of_songs[n]}')
+        song_len = a.get_length() * 3
+        for i in range(0, math.ceil(song_len)):
+            time.sleep(.4)
+            self.progressbar.set(pygame.mixer.music.get_pos() / 1000000)
 
-        def threading():
-            t1 = threading.Thread(target=progress)
-            t1.start()
+    def threading(progress):
+        t1 = threading.Thread(target=progress)
+        t1.start()
+            
+
+
 
 if __name__ == "__main__":
     app = App()

@@ -97,44 +97,44 @@ class App(customtkinter.CTk):
 
         # Main Menu
         # Light Control Button
-        image2 = tkinter.PhotoImage(file="images/lighticonwhite.png")
-        new_width = 10
-        new_height = 10
+        image2 = tkinter.PhotoImage(file="images/lai.png")
+        new_width = 12
+        new_height = 12
         resized_image2 = image2.subsample(new_width, new_height)
-        self.button_2 = customtkinter.CTkButton(self.frame, image=resized_image2, text="", command=self.open_lightcontrol, width=100, height=100, corner_radius=30, fg_color="#1f538d", hover_color="#163b65", border_width=1, border_color="white")
+        self.button_2 = customtkinter.CTkButton(self.frame, image=resized_image2, text="", command=self.open_lightcontrol, width=100, height=100, corner_radius=0, fg_color="#212121", hover_color="#212121")
         self.button_2.grid(row=1, column=1, padx=(50,20), pady=0)
         
         self.label = customtkinter.CTkLabel(self.frame, text="Light Control", font=customtkinter.CTkFont(size=14, weight="bold"))
         self.label.grid(row=2, column=1, padx=(25,0), pady=(0,50))
         
         # Music Player Button
-        image3 = tkinter.PhotoImage(file="images/musiciconwhite.png")
-        new_width = 10
-        new_height = 10
+        image3 = tkinter.PhotoImage(file="images/mai.png")
+        new_width = 12
+        new_height = 12
         resized_image3 = image3.subsample(new_width, new_height)
-        self.button_3 = customtkinter.CTkButton(self.frame, image=resized_image3, text="", command=self.open_musicplayer, width=100, height=100, corner_radius=30, fg_color="#1f538d", hover_color="#163b65", border_width=1, border_color="white")
+        self.button_3 = customtkinter.CTkButton(self.frame, image=resized_image3, text="", command=self.open_musicplayer, width=100, height=100, corner_radius=0, fg_color="#212121", hover_color="#212121")
         self.button_3.grid(row=1, column=2, padx=20, pady=0)
         
         self.label3 = customtkinter.CTkLabel(self.frame, text="Music Player", font=customtkinter.CTkFont(size=14, weight="bold"))
         self.label3.grid(row=2, column=2, padx=0, pady=(0,50))
 
         # Special Effects Button
-        image4 = tkinter.PhotoImage(file="images/christmasiconwhite.png")
-        new_width = 10
-        new_height = 10
+        image4 = tkinter.PhotoImage(file="images/sei.png")
+        new_width = 12
+        new_height = 12
         resized_image4 = image4.subsample(new_width, new_height)
-        self.button_4 = customtkinter.CTkButton(self.frame, image=resized_image4, text="", command=self.open_specialeffects, width=100, height=100, corner_radius=30, fg_color="#1f538d", hover_color="#163b65", border_width=1, border_color="white")
+        self.button_4 = customtkinter.CTkButton(self.frame, image=resized_image4, text="", command=self.open_specialeffects, width=100, height=100, fg_color="#212121", hover_color="#212121")
         self.button_4.grid(row=1, column=3, padx=20, pady=0)
         
         self.label4 = customtkinter.CTkLabel(self.frame, text="Special Effects", font=customtkinter.CTkFont(size=14, weight="bold"))
         self.label4.grid(row=2, column=3, padx=0, pady=(0,50))
 
         # Add More Lights Button
-        image5 = tkinter.PhotoImage(file="images/lighticonwhite.png")
-        new_width = 10
-        new_height = 10
+        image5 = tkinter.PhotoImage(file="images/ali.png")
+        new_width = 12
+        new_height = 12
         resized_image5 = image5.subsample(new_width, new_height)
-        self.button_5 = customtkinter.CTkButton(self.frame, image=resized_image5, text="", command=self.open_addmorelights, width=100, height=100, corner_radius=30, fg_color="#1f538d", hover_color="#163b65", border_width=1, border_color="white")
+        self.button_5 = customtkinter.CTkButton(self.frame, image=resized_image5, text="", command=self.open_addmorelights, width=100, height=100, corner_radius=0, fg_color="#212121", hover_color="#212121")
         self.button_5.grid(row=1, column=4, padx=(20,50), pady=0)
 
         self.label5 = customtkinter.CTkLabel(self.frame, text="Add More Lights", font=customtkinter.CTkFont(size=14, weight="bold"))
