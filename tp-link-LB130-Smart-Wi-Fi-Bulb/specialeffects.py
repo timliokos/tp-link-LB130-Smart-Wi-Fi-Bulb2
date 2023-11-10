@@ -14,6 +14,14 @@ customtkinter.set_default_color_theme("dark-blue")  # Themes: "blue" (standard),
 
 class App(customtkinter.CTk):
     def __init__(self):
+        
+        self.running_effect = None  # Initialize the running_effect to None
+        self.stop_event = threading.Event()  # Initialize the stop event
+
+        global value
+        value = 1
+       
+
         super().__init__()
 
         self.after_id = None
@@ -152,7 +160,9 @@ class App(customtkinter.CTk):
                                                         command=self.merrygoround, width=100, height=77, fg_color="#1a1a1a", hover_color="white", text_color="black")
         self.button_2.grid(row=2, column=1, padx=(177,20), pady=(295,100), sticky='nw')
 
-
+        # Set Button
+        self.button_3 = customtkinter.CTkButton(self.frame, text="Set", fg_color="#1f538d", hover_color="#163b65", text_color="white", font=customtkinter.CTkFont(size=18), width=150, height=40, command=self.stopeffect, border_width=1, border_color="white")
+        self.button_3.grid(row=2, column=1, padx=(385,10), pady=(290, 0), sticky="nw")
 
         # Default Values
         self.appearance_mode_optionmenu.set("Dark")
@@ -196,17 +206,27 @@ class App(customtkinter.CTk):
 
 
 
-    def christmaslights(bulb_ips):
+    def christmaslights(self):
         bulb_ips = [ '192.168.1.100', '192.168.1.101', '192.168.1.102', '192.168.1.103', '192.168.1.104', '192.168.1.105',#
                 '192.168.1.106', '192.168.1.107', '192.168.1.108', '192.168.1.109', '192.168.1.110', '192.168.1.111',
                 '192.168.1.112', '192.168.1.113', '192.168.1.114', ]
-        runChristmas(bulb_ips)
+        if not self.running_effect:
+            self.stop_event.clear()  # Reset the stop event before starting a new effect
+            self.running_effect = threading.Thread(target=runChristmas, args=(bulb_ips,))
+            self.running_effect.start()
+            
+       
+            
+        
         
     def policelights(bulb_ips):
         bulb_ips = [ '192.168.1.100', '192.168.1.101', '192.168.1.102', '192.168.1.103', '192.168.1.104', '192.168.1.105',#
                 '192.168.1.106', '192.168.1.107', '192.168.1.108', '192.168.1.109', '192.168.1.110', '192.168.1.111',
                 '192.168.1.112', '192.168.1.113', '192.168.1.114', ]
         runPolice(bulb_ips)
+        
+       
+
 
     def hazardlights(bulb_ips):
         bulb_ips = [ '192.168.1.100', '192.168.1.101', '192.168.1.102', '192.168.1.103', '192.168.1.104', '192.168.1.105',#
@@ -219,6 +239,17 @@ class App(customtkinter.CTk):
                 '192.168.1.106', '192.168.1.107', '192.168.1.108', '192.168.1.109', '192.168.1.110', '192.168.1.111',
                 '192.168.1.112', '192.168.1.113', '192.168.1.114', ]
         runMerrygo(bulb_ips)
+
+
+    
+    def stopeffect(self):
+        global value
+        value -= 1
+        if value == 0:
+            print("button pressed")
+            value = 1
+        else:
+            pass 
 
 
 if __name__ == "__main__":
