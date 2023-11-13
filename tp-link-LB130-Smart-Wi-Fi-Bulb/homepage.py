@@ -15,8 +15,6 @@ class App(customtkinter.CTk):
         super().__init__()
 
         
-    
-
         # Configure Window
         self.title("D633 Lights/Music Management System")
         
@@ -36,7 +34,7 @@ class App(customtkinter.CTk):
         self.sidebar_frame.grid_rowconfigure(4, weight=1)
 
         # Logo Label
-        imagesb = tkinter.PhotoImage(file="images/d633logosm2.png")
+        imagesb = tkinter.PhotoImage(file="tp-link-LB130-Smart-Wi-Fi-Bulb/images/d633logosm2.png")
         new_width = 10
         new_height = 10
         resized_imagesb = imagesb.subsample(new_width, new_height)
@@ -87,7 +85,7 @@ class App(customtkinter.CTk):
         self.frame.grid(row=1, column=1, padx=20, pady=(10,10))
 
         # Logo Icon
-        image1 = tkinter.PhotoImage(file="images/D633LOGO3.png")
+        image1 = tkinter.PhotoImage(file="tp-link-LB130-Smart-Wi-Fi-Bulb/images/D633LOGO3.png")
         new_width = 5
         new_height = 5
         resized_image1 = image1.subsample(new_width, new_height)
@@ -97,7 +95,7 @@ class App(customtkinter.CTk):
 
         # Main Menu
         # Light Control Button
-        image2 = tkinter.PhotoImage(file="images/lai.png")
+        image2 = tkinter.PhotoImage(file="tp-link-LB130-Smart-Wi-Fi-Bulb/images/lai.png")
         new_width = 12
         new_height = 12
         resized_image2 = image2.subsample(new_width, new_height)
@@ -108,7 +106,7 @@ class App(customtkinter.CTk):
         self.label.grid(row=2, column=1, padx=(25,0), pady=(0,50))
         
         # Music Player Button
-        image3 = tkinter.PhotoImage(file="images/mai.png")
+        image3 = tkinter.PhotoImage(file="tp-link-LB130-Smart-Wi-Fi-Bulb/images/mai.png")
         new_width = 12
         new_height = 12
         resized_image3 = image3.subsample(new_width, new_height)
@@ -119,7 +117,7 @@ class App(customtkinter.CTk):
         self.label3.grid(row=2, column=2, padx=0, pady=(0,50))
 
         # Special Effects Button
-        image4 = tkinter.PhotoImage(file="images/sei.png")
+        image4 = tkinter.PhotoImage(file="tp-link-LB130-Smart-Wi-Fi-Bulb/images/sei.png")
         new_width = 12
         new_height = 12
         resized_image4 = image4.subsample(new_width, new_height)
@@ -130,7 +128,7 @@ class App(customtkinter.CTk):
         self.label4.grid(row=2, column=3, padx=0, pady=(0,50))
 
         # Add More Lights Button
-        image5 = tkinter.PhotoImage(file="images/ali.png")
+        image5 = tkinter.PhotoImage(file="tp-link-LB130-Smart-Wi-Fi-Bulb/images/ali.png")
         new_width = 12
         new_height = 12
         resized_image5 = image5.subsample(new_width, new_height)
@@ -151,22 +149,22 @@ class App(customtkinter.CTk):
 
     # Open Light Control Page
     def open_lightcontrol(self):
-        subprocess.Popen(["python", "lightcontrol.py"])
+        subprocess.Popen(["python", "tp-link-LB130-Smart-Wi-Fi-Bulb/lightcontrol.py"])
         self.destroy()
 
     # Open Music Player Page
     def open_musicplayer(self):
-        subprocess.Popen(["python", "musicplayer.py"])
+        subprocess.Popen(["python", "tp-link-LB130-Smart-Wi-Fi-Bulb/musicplayer.py"])
         self.destroy()
 
     # Open Special Effects Page
     def open_specialeffects(self):
-        subprocess.Popen(["python", "specialeffects.py"])
+        subprocess.Popen(["python", "tp-link-LB130-Smart-Wi-Fi-Bulb/specialeffects.py"])
         self.destroy()
 
     # Open Add More Lights Page
     def open_addmorelights(self):
-        subprocess.Popen(["python", "addmorelights.py"])
+        subprocess.Popen(["python", "tp-link-LB130-Smart-Wi-Fi-Bulb/addmorelights.py"])
         self.destroy()
 
     # Change Appearance Mode

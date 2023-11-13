@@ -33,7 +33,7 @@ class App(customtkinter.CTk):
         self.sidebar_frame.grid_rowconfigure(5, weight=1)
 
         # Logo Label
-        imagesb = tkinter.PhotoImage(file="images/d633logosm2.png")
+        imagesb = tkinter.PhotoImage(file="tp-link-LB130-Smart-Wi-Fi-Bulb/images/d633logosm2.png")
         new_width = 10
         new_height = 10
         resized_imagesb = imagesb.subsample(new_width, new_height)
@@ -130,27 +130,27 @@ class App(customtkinter.CTk):
 
     # Open Home Page
     def return_home(self):
-        subprocess.Popen(["python", "homepage.py"])
+        subprocess.Popen(["python", "tp-link-LB130-Smart-Wi-Fi-Bulb/homepage.py"])
         self.destroy()
     
     # Open Light Control Page
     def open_lightcontrol(self):
-        subprocess.Popen(["python", "lightcontrol.py"])
+        subprocess.Popen(["python", "tp-link-LB130-Smart-Wi-Fi-Bulb/lightcontrol.py"])
         self.destroy()
 
     # Open Music Player Page
     def open_musicplayer(self):
-        subprocess.Popen(["python", "musicplayer.py"])
+        subprocess.Popen(["python", "tp-link-LB130-Smart-Wi-Fi-Bulb/musicplayer.py"])
         self.destroy()
 
     # Open Special Effects Page
     def open_specialeffects(self):
-        subprocess.Popen(["python", "specialeffects.py"])
+        subprocess.Popen(["python", "tp-link-LB130-Smart-Wi-Fi-Bulb/specialeffects.py"])
         self.destroy()
 
     # Open Add More Lights Page
     def open_addmorelights(self):
-        subprocess.Popen(["python", "addmorelights.py"])
+        subprocess.Popen(["python", "tp-link-LB130-Smart-Wi-Fi-Bulb/addmorelights.py"])
         self.destroy()
 
     # Change Appearance Mode

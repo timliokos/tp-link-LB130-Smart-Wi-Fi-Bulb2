@@ -21,7 +21,7 @@ def login(event=None):
 
     if username == "admin" and password == "password":
         # Open Home Page
-        subprocess.Popen(["python", "homepage.py"])
+        subprocess.Popen(["python", "tp-link-LB130-Smart-Wi-Fi-Bulb/homepage.py"])
         # Close Current Window
         root.destroy()
     else:
@@ -33,7 +33,7 @@ frame = customtkinter.CTkFrame(master=root)
 frame.pack(pady=20, padx=360, fill="both", expand=True)
 
 # Logo Icon
-image1 = tk.PhotoImage(file="images/D633LOGO3.png")
+image1 = tk.PhotoImage(file="tp-link-LB130-Smart-Wi-Fi-Bulb/images/D633LOGO3.png")
 new_width = 8
 new_height = 8
 resized_image1 = image1.subsample(new_width, new_height)

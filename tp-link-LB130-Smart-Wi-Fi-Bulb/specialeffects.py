@@ -45,7 +45,7 @@ class App(customtkinter.CTk):
         self.sidebar_frame.grid_rowconfigure(5, weight=1)
 
         # Logo Label
-        imagesb = tkinter.PhotoImage(file="images/d633logosm2.png")
+        imagesb = tkinter.PhotoImage(file="tp-link-LB130-Smart-Wi-Fi-Bulb/images/d633logosm2.png")
         new_width = 10
         new_height = 10
         resized_imagesb = imagesb.subsample(new_width, new_height)
@@ -114,7 +114,7 @@ class App(customtkinter.CTk):
         self.frame.grid(row=1, column=1, padx=20, pady=(10,10))
 
         # Page Header
-        image1 = tkinter.PhotoImage(file="images/sei.png")
+        image1 = tkinter.PhotoImage(file="tp-link-LB130-Smart-Wi-Fi-Bulb/images/sei.png")
         new_width = 35
         new_height = 35
         resized_image1 = image1.subsample(new_width, new_height)
@@ -124,7 +124,7 @@ class App(customtkinter.CTk):
 
         # Effect Menu
         # Christmas Lights Effect
-        imagecl = tkinter.PhotoImage(file="images/CHRLIG3.png")
+        imagecl = tkinter.PhotoImage(file="tp-link-LB130-Smart-Wi-Fi-Bulb/images/CHRLIG3.png")
         new_width = 4
         new_height = 4
         resized_imagecl = imagecl.subsample(new_width, new_height)
@@ -134,7 +134,7 @@ class App(customtkinter.CTk):
         
         
         # Police Lights Effect
-        imagecl = tkinter.PhotoImage(file="images/POLLIG3.png")
+        imagecl = tkinter.PhotoImage(file="tp-link-LB130-Smart-Wi-Fi-Bulb/images/POLLIG3.png")
         new_width = 4
         new_height = 4
         resized_imagepl = imagecl.subsample(new_width, new_height)
@@ -143,7 +143,7 @@ class App(customtkinter.CTk):
         self.button_2.grid(row=2, column=1, padx=(177,20), pady=(105,10), sticky='nw')
 
         # Hazard Lights Effect
-        imagecl = tkinter.PhotoImage(file="images/HAZLIG3.png")
+        imagecl = tkinter.PhotoImage(file="tp-link-LB130-Smart-Wi-Fi-Bulb/images/HAZLIG3.png")
         new_width = 4
         new_height = 4
         resized_imagepl = imagecl.subsample(new_width, new_height)
@@ -152,7 +152,7 @@ class App(customtkinter.CTk):
         self.button_2.grid(row=2, column=1, padx=(177,20), pady=(200,10), sticky='nw')
 
         # Merry Go Round Effect
-        imagecl = tkinter.PhotoImage(file="images/MGRLIG3.png")
+        imagecl = tkinter.PhotoImage(file="tp-link-LB130-Smart-Wi-Fi-Bulb/images/MGRLIG3.png")
         new_width = 4
         new_height = 4
         resized_imagepl = imagecl.subsample(new_width, new_height)
@@ -173,17 +173,17 @@ class App(customtkinter.CTk):
 
     # Open Home Page
     def return_home(self):
-        subprocess.Popen(["python", "homepage.py"])
+        subprocess.Popen(["python", "tp-link-LB130-Smart-Wi-Fi-Bulb/homepage.py"])
         self.destroy()
 
     # Open Light Control Page
     def open_lightcontrol(self):
-        subprocess.Popen(["python", "lightcontrol.py"])
+        subprocess.Popen(["python", "tp-link-LB130-Smart-Wi-Fi-Bulb/lightcontrol.py"])
         self.destroy()
 
     # Open Music Player Page
     def open_musicplayer(self):
-        subprocess.Popen(["python", "musicplayer.py"])
+        subprocess.Popen(["python", "tp-link-LB130-Smart-Wi-Fi-Bulb/musicplayer.py"])
         self.destroy()
 
     # Open Add More Lights Page
@@ -214,10 +214,7 @@ class App(customtkinter.CTk):
             self.stop_event.clear()  # Reset the stop event before starting a new effect
             self.running_effect = threading.Thread(target=runChristmas, args=(bulb_ips,))
             self.running_effect.start()
-            
-       
-            
-        
+             
         
     def policelights(bulb_ips):
         bulb_ips = [ '192.168.1.100', '192.168.1.101', '192.168.1.102', '192.168.1.103', '192.168.1.104', '192.168.1.105',#
@@ -225,8 +222,6 @@ class App(customtkinter.CTk):
                 '192.168.1.112', '192.168.1.113', '192.168.1.114', ]
         runPolice(bulb_ips)
         
-       
-
 
     def hazardlights(bulb_ips):
         bulb_ips = [ '192.168.1.100', '192.168.1.101', '192.168.1.102', '192.168.1.103', '192.168.1.104', '192.168.1.105',#

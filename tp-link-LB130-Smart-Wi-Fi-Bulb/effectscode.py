@@ -1,8 +1,53 @@
 import time
 from tplight import LB130
 import threading
+import librosa
+import random
+import pygame
 
+def getbpm(selected_song):
 
+    # get tempo of song
+    y, sr = librosa.load(selected_song)
+    tempo, beats = librosa.beat.beat_track(y=y, sr=sr)
+    
+    # convert tempo to seconds
+    bps = 60 / tempo
+    
+    return bps
+
+def runTempo(bps): 
+    bulb_ips = ['192.168.1.100', '192.168.1.101', '192.168.1.102', '192.168.1.103', '192.168.1.104', '192.168.1.105',#
+             '192.168.1.106', '192.168.1.107', '192.168.1.108', '192.168.1.109', '192.168.1.110', '192.168.1.111',
+             '192.168.1.112', '192.168.1.113', '192.168.1.114']
+    
+    threads = []
+
+    for bulb_ip in bulb_ips:
+        thread = threading.Thread(target=tempo_effects, args=(bulb_ip, bps))
+        threads.append(thread)
+        
+    for thread in threads:
+        thread.start()
+        
+    for thread in threads:
+        thread.join()    
+        
+
+def tempo_effects(bulb_ips, bps):
+      
+    light = LB130(bulb_ips)
+  
+    # while a song is playing 
+    while pygame.mixer.music.get_busy():
+        # Create a variable to change hue to a random integer 0-360
+        random_hue = random.randint(0, 360)
+        # Set the hue of the light.
+        light.hue = random_hue
+        time.sleep(bps)
+        light.hue = random_hue
+        time.sleep(bps)
+    
 def runChristmas(bulb_ips): 
     threads = []
 
@@ -31,15 +76,12 @@ def effectChristmas(bulb_ips):
             time.sleep(0.75)
             light.hue = 0
             time.sleep(0.75)
-            
-           
-           
-            
+                  
 
         except Exception as e:
             print(f"Error controlling bulb at {bulb_ips}: {str(e)}")
             
-
+                    
 def runPolice(bulb_ips): 
     threads = []
 
